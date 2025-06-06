@@ -34,26 +34,28 @@ router.post('/' , upload.single('CoverImage') , async (req,res)=>{
     return res.redirect(`/blog/${blog._id}`);
 })
 
+
+router.get('/:id', async (req,res) => {
+  console.log("hereeeeeee");
+  const blog = await Blog.findById(req.params.id).populate("createdBy");
+  console.log(blog);
+  const comments = await Comment.find({ blogId : req.params.id }).populate(
+    "createdBy"
+  );
+  console.log("comments : " , comments);
+  return res.render("blog", {
+    user : req.user,
+    blog,
+    comments,
+  });
+});
 router.post("/comment/:blogId", async(req,res) => {
-  console.log("Reached comment route");
-  console.log("req.body:", req.body);
-  console.log("req.user" , req.user);
-  console.log("id : " , req.params)
   await Comment.create({
     content : req.body.content,
     blogId : req.params.blogId,
     createdBy : req.user._id,
   });
   return res.redirect(`/blog/${req.params.blogId}`);
-});
-
-router.get('/:id', async (req,res) => {
-  console.log("this is first ") ;
-  const blog = await Blog.findById(req.params.id).populate("createdBy");
-  return res.render("blog", {
-    user : req.user,
-    blog,
-  });
 });
 
 module.exports = router;
