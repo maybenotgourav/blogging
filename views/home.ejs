@@ -2,25 +2,54 @@
 <html lang="en">
 <head>
     <%- include("./partials/head") %>
-    <title>HomePage</title>
+    <title>Blogify — Home</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
+    <% const activeNav = 'home'; %>
     <%- include("./partials/nav") %>
-    <div class="container mt-3">
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-            <% blogs.forEach(blog => { %>
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= blog.title %></h5>
-                            <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
-                        </div>
+    <main class="container flex-grow-1 px-3 px-lg-4 pb-5">
+        <header class="hero">
+            <h1>Stories &amp; ideas</h1>
+            <p>Discover posts from the community. Read, reflect, and write your own when you sign in.</p>
+        </header>
+
+        <% if (!blogs || blogs.length === 0) { %>
+            <div class="empty-state">
+                <h2>No posts yet</h2>
+                <p>Be the first to publish something worth reading.</p>
+                <% if (locals.user) { %>
+                    <a href="/blog/add-new" class="btn btn-primary">Write a post</a>
+                <% } else { %>
+                    <a href="/user/signup" class="btn btn-primary">Create an account</a>
+                <% } %>
+            </div>
+        <% } else { %>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4">
+                <% blogs.forEach(blog => { %>
+                    <div class="col">
+                        <article class="card post-card h-100 border-0">
+                            <div class="post-card__media">
+                                <img src="<%= blog.coverImageURL || '/images/download.jpg' %>" alt="" loading="lazy" onerror="this.src='/images/download.jpg'">
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <h2 class="card-title h5"><%= blog.title %></h2>
+                                <div class="d-flex flex-wrap gap-2 mt-auto pt-1 align-items-center">
+                                    <a href="/blog/<%= blog._id %>" class="btn btn-primary btn-sm">Read article</a>
+                                    <% if (locals.user && (locals.user.role === 'ADMIN' || (blog.createdBy && String(blog.createdBy) === String(locals.user._id)))) { %>
+                                    <a href="/blog/edit/<%= blog._id %>" class="btn btn-outline-secondary btn-sm">Edit</a>
+                                    <form action="/blog/delete/<%= blog._id %>" method="post" class="d-inline" onsubmit="return confirm('Delete this post permanently? This cannot be undone.');">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                                    </form>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </article>
                     </div>
-                </div>
-            <% }) %>
-        </div>
-    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </main>
+    <%- include("./partials/footer") %>
     <%- include("./partials/scripts") %>
 </body>
 </html>

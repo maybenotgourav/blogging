@@ -2,24 +2,31 @@
 <html lang="en">
 <head>
     <%- include("./partials/head") %>
-    <title>Signin</title>
+    <title>Sign in — Blogify</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <%- include("./partials/nav") %>
-    <div class="container mt-4">
-        <form action="/user/signin" method="post">
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input name="password" type="password" class="form-control" id="exampleInputPassword1">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+    <main class="container form-page flex-grow-1 px-3 px-lg-4">
+        <div class="form-card">
+            <h1>Welcome back</h1>
+            <p class="lead">Sign in to comment and publish posts.</p>
+            <form action="/user/signin" method="post">
+                <div class="mb-3">
+                    <label for="signin-email" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" id="signin-email" autocomplete="email" required>
+                </div>
+                <div class="mb-4">
+                    <label for="signin-password" class="form-label">Password</label>
+                    <input name="password" type="password" class="form-control" id="signin-password" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Sign in</button>
             </form>
+            <p class="auth-switch mb-0">
+                No account? <a href="/user/signup">Create one</a>
+            </p>
         </div>
-    <%-include("./partials/scripts") %>
+    </main>
+    <%- include("./partials/footer") %>
+    <%- include("./partials/scripts") %>
 </body>
 </html>

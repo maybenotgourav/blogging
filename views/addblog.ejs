@@ -2,38 +2,33 @@
 <html lang="en">
 <head>
     <%- include("./partials/head") %>
-    <title>HomePage</title>
+    <title>Write a post — Blogify</title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <%- include("./partials/nav") %>
-    <div class="container mt-3">
-        <form action="/blog" method="post" enctype="multipart/form-data">
-            <div class="mb-3">
-                    <label for="title" class="form-label">Cover Image</label>
-                    <input type="file" class="form-control" id="CoverImage" name="CoverImage" aria-describedby="CoverImage">
-                    <br>
-                <div>
+    <main class="container form-page flex-grow-1 px-3 px-lg-4">
+        <div class="form-card">
+            <h1>New post</h1>
+            <p class="lead">Add a cover image, title, and your story. You can edit posts anytime from the article page.</p>
+            <form action="/blog" method="post" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label for="CoverImage" class="form-label">Cover image</label>
+                    <input type="file" class="form-control" id="CoverImage" name="CoverImage" accept="image/*" required>
+                    <div class="form-text">JPEG or PNG works best. Landscape images look great on cards.</div>
+                </div>
+                <div class="mb-4">
                     <label for="title" class="form-label">Title</label>
-                    <input type="text" class="form-control" id="title" name="title" aria-describedby="title">
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                    <br>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="A headline readers will remember" required>
                 </div>
-            
-                <div>
+                <div class="mb-4">
                     <label for="body" class="form-label">Body</label>
-                    <div class="form-floating">
-                    <textarea name="body" class="form-control" id="body"></textarea>
-                    <label for="floatingTextarea"></label>
-                    </div>
+                    <textarea name="body" class="form-control" id="body" rows="12" placeholder="Write your post…" required></textarea>
                 </div>
-                <br> 
-                <div> 
-                    <button class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <%-include("./partials/scripts") %>
+                <button type="submit" class="btn btn-primary">Publish</button>
+            </form>
+        </div>
+    </main>
+    <%- include("./partials/footer") %>
+    <%- include("./partials/scripts") %>
 </body>
 </html>

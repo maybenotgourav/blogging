@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/head") %>
+    <title>Page not found — Blogify</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <%- include("./partials/nav") %>
+    <main class="container flex-grow-1 px-3 px-lg-4 d-flex align-items-center justify-content-center py-5">
+        <div class="not-found text-center" style="max-width: 420px;">
+            <p class="not-found__code mb-2">404</p>
+            <h1 class="h3 mb-3" style="font-family: var(--font-display, Georgia, serif);">This page doesn’t exist</h1>
+            <p class="text-muted mb-4">
+                <% if (typeof path !== 'undefined' && path) { %>
+                Nothing is registered for <code class="small"><%= path %></code>.
+                <% } else { %>
+                The link may be broken or the page was removed.
+                <% } %>
+            </p>
+            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                <a href="/" class="btn btn-primary">Back to home</a>
+                <a href="/user/signin" class="btn btn-outline-secondary">Sign in</a>
+            </div>
+        </div>
+    </main>
+    <%- include("./partials/footer") %>
+    <%- include("./partials/scripts") %>
+</body>
+</html>

@@ -6,7 +6,8 @@ function createtokenfromuser(user){
     const payload = {
         _id : user.id,
         email : user.email,
-        profileImageURL : user.profileImageURL,
+        fullName : user.fullName,
+        profilePicture : user.profilePicture,
         role : user.role,
     };
     const token = JWT.sign(payload , secret);

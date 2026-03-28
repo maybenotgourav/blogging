@@ -1,33 +1,35 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Blogify</a>
+<nav class="navbar navbar-expand-lg navbar-dark app-navbar">
+  <div class="container-fluid px-3 px-lg-4">
+    <a class="navbar-brand" href="/">Blogify</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link <%= typeof activeNav !== 'undefined' && activeNav === 'home' ? 'active' : '' %>" href="/">Home</a>
         </li>
         <% if (locals.user) { %>
-            <li class="nav-item">
-            <a class="nav-link" href="/blog/add-new">Add Blog</a>
-            </li>   
-            <li class="nav-item dropdown">
+          <li class="nav-item">
+            <a class="nav-link" href="/blog/add-new">Write</a>
+          </li>
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              bhoomika<%= locals.user.fullName %>
+              <%= locals.user.fullName || locals.user.email || 'Account' %>
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/user/Logout">Logout</a></li>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="/user/profile">Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/user/logout">Log out</a></li>
             </ul>
-            </li>
-        <% } else {%>
+          </li>
+        <% } else { %>
           <li class="nav-item">
-            <a class="nav-link" href="/user/signup">Create Account</a>
-          </li>  
+            <a class="nav-link" href="/user/signup">Create account</a>
+          </li>
           <li class="nav-item">
-            <a class="nav-link" href="/user/signin">Signin</a>
-          </li>   
+            <a class="nav-link" href="/user/signin">Sign in</a>
+          </li>
         <% } %>
       </ul>
     </div>
@@ -35,7 +37,7 @@
 </nav>
 
 <% if (locals.error) { %>
-  <div class="alert alert-danger   " role="alert">
+  <div class="alert alert-danger app-alert" role="alert">
     <%= locals.error %>
   </div>
 <% } %>

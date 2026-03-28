@@ -9,6 +9,20 @@ router.get('/signup' , (req,res) => {
     res.render("signup");
 })
 
+router.get('/profile', async (req, res) => {
+    if (!req.user) {
+        return res.redirect('/user/signin');
+    }
+    const profileUser = await User.findById(req.user._id);
+    if (!profileUser) {
+        return res.redirect('/user/signin');
+    }
+    return res.render('profile', {
+        user: req.user,
+        profileUser,
+    });
+})
+
 router.post('/signin' , async(req,res)=>{
     const {email,password} = req.body;
     try{

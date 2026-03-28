@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/head") %>
+    <title>Your profile — Blogify</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <%- include("./partials/nav") %>
+    <main class="container form-page flex-grow-1 px-3 px-lg-4">
+        <div class="profile-card">
+            <div class="profile-card__header d-flex flex-column flex-sm-row align-items-sm-center gap-3">
+                <img class="profile-card__avatar" src="<%= profileUser.profilePicture || '/images/download.jpg' %>" alt="" onerror="this.src='/images/download.jpg'">
+                <div>
+                    <h1 class="h3 mb-1"><%= profileUser.fullName %></h1>
+                    <p class="text-muted mb-0"><%= profileUser.email %></p>
+                </div>
+            </div>
+            <dl class="profile-details row g-3 mt-3 mb-0">
+                <div class="col-sm-6">
+                    <dt>Role</dt>
+                    <dd><%= profileUser.role || 'USER' %></dd>
+                </div>
+                <div class="col-sm-6">
+                    <dt>Member since</dt>
+                    <dd><%= profileUser.createdAt ? new Date(profileUser.createdAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' }) : '—' %></dd>
+                </div>
+            </dl>
+        </div>
+    </main>
+    <%- include("./partials/footer") %>
+    <%- include("./partials/scripts") %>
+</body>
+</html>
