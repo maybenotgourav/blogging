@@ -47,16 +47,13 @@ userSchema.statics.matchpasswordandgeneratetoken = async function (email,passwor
 
 userSchema.pre('save', function(next) {
     const user = this;
-
     if(!user.isModified("password")) return;
     const salt = randomBytes(16).toString();
     const hashedPass = createHmac('sha256' , salt)
     .update(user.password)
     .digest("hex");
-
     this.salt = salt;
     this.password = hashedPass;
-
     next();
 });
 
